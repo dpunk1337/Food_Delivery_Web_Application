@@ -1,0 +1,11 @@
+*
+/*
+/*/
+
+!.gitignore
+!/BuyerBackend/
+!/BuyerFrontend/
+!/RestaurantBackend/
+!/RestaurantFrontend/
+!/DeliveryAgentBackend/
+!/DeliveryAgentFrontend/
