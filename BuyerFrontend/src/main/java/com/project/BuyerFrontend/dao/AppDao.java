@@ -1,6 +1,9 @@
 package com.project.BuyerFrontend.dao;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -8,9 +11,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.BuyerFrontend.entity.Dish;
+import com.project.BuyerFrontend.entity.OrderItem;
+import com.project.BuyerFrontend.entity.Orders;
+import com.project.BuyerFrontend.entity.Restaurant;
 import com.project.BuyerFrontend.entity.User;
+import com.project.BuyerFrontend.prevalent.CurrentUser;
 
 @Repository
 public class AppDao {
@@ -36,5 +45,31 @@ public class AppDao {
 		System.out.println(URL+"getUser/"+mobileNumber);
 		User user=restTemplate.getForObject(URL+"getUser/"+mobileNumber, User.class);
 		return user;
+	}
+	
+	public List<Restaurant> getRestaurantsInCity(){
+		return new ArrayList<>(Arrays.asList(
+				new Restaurant(1,"Dominoes"),
+				new Restaurant(2,"Mc Donalds"),
+				new Restaurant(3,"KFC")
+				));
+		
+	}
+
+	public List<Dish> getDishesInRestaurant(Integer mobileNumber) {
+		return Arrays.asList(restTemplate.getForObject(URL+"getDishes/"+mobileNumber, Dish[].class));
+	}
+	
+	public void placeOrder(String orderItems,Integer restaurantMobileNumber) {
+		restTemplate.postForObject(
+				URL+
+				"placeOrder?mobileNumber="+CurrentUser.MOBILE_NUMBER
+				+"&city="+"chandigarh"
+				+"&restaurantMobileNumber="+restaurantMobileNumber, 
+				orderItems, String.class);
+	}
+
+	public List<Orders> getOrders() {
+		return Arrays.asList(restTemplate.getForObject(URL+"getOrders/"+CurrentUser.MOBILE_NUMBER, Orders[].class));
 	}
 }

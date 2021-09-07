@@ -1,18 +1,44 @@
 package com.project.BuyerFrontend.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.project.BuyerFrontend.dao.AppDao;
+import com.project.BuyerFrontend.entity.Dish;
+import com.project.BuyerFrontend.entity.OrderItem;
+import com.project.BuyerFrontend.entity.OrderItems;
+import com.project.BuyerFrontend.entity.Orders;
+import com.project.BuyerFrontend.entity.Restaurant;
 import com.project.BuyerFrontend.entity.User;
 import com.project.BuyerFrontend.prevalent.CurrentUser;
 
 @Controller
 public class AppController {
+	@Autowired
+	ObjectMapper objectMapper;
+	
 	@Autowired
 	AppDao appDao;
 	
@@ -49,6 +75,46 @@ public class AppController {
 	
 	public boolean notLoggedIn() {
 		return CurrentUser.MOBILE_NUMBER==null;
+	}
+	
+	@RequestMapping("/seeRestaurants")
+	public String seeRestaurants(Model model) {
+		List<Restaurant>restaurants=appDao.getRestaurantsInCity();
+		model.addAttribute("restaurants", restaurants);
+		return "seeRestaurants";
+	}
+	
+	@RequestMapping("/seeRestaurant")
+	public String seeRestaurant(@RequestParam("mobileNumber")Integer mobileNumber,Model model) {
+		List<Dish> dishes=appDao.getDishesInRestaurant(mobileNumber);
+		OrderItems orderItems=new OrderItems(dishes,true);
+		model.addAttribute("mobileNumber", mobileNumber);
+		model.addAttribute("orderItems",orderItems);
+		return "seeRestaurant";		
+	}
+	
+	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST )
+	public String placeOrder(@RequestParam("mobileNumber") Integer mobileNumber,@ModelAttribute("orderItems") OrderItems orderItems) {
+		List<OrderItem> orderItemsList=orderItems.getOrderItemsList();
+		System.out.println(orderItemsList.size());
+		List<OrderItem> validOrders=new ArrayList<OrderItem>();
+		for(OrderItem item:orderItemsList) {
+			if(item.getQuantity()<=0)continue;
+			validOrders.add(item);
+		}
+		if(validOrders.size()==0)return "orderUnsuccessful";
+		String validOrderItems=new String();
+		try {validOrderItems = objectMapper.writeValueAsString(validOrders);
+		} catch (JsonProcessingException e) {}
+		appDao.placeOrder(validOrderItems,mobileNumber);
+		return "orderSuccessful";
+	}
+	
+	@RequestMapping(value ="/seeOrders")
+	public String seeOrders(Model model) {
+		List<Orders> orders=appDao.getOrders();
+		model.addAttribute("orders",orders);
+		return "seeOrders";
 	}
 
 }
