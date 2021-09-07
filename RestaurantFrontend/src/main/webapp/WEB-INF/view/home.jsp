@@ -8,6 +8,7 @@
 </head>
 <body>
 	<h1>Welcome To Home Page</h1>
+	<h2><a href="/food">Menu</a></h2>
 	<h3><a href="/logout">Logout</a></h3>
 </body>
 </html>

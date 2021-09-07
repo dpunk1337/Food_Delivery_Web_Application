@@ -1,6 +1,7 @@
 package com.project.RestaurantFrontend.dao;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.RestaurantFrontend.entity.Food_Dish;
 import com.project.RestaurantFrontend.entity.User;
 
 @Repository
@@ -36,5 +38,10 @@ public class AppDao {
 		System.out.println(URL+"getUser/"+mobileNumber);
 		User user=restTemplate.getForObject(URL+"getUser/"+mobileNumber, User.class);
 		return user;
+	}
+	
+	public List<Food_Dish> getAllFood() {
+		System.out.println(URL+"getFood/");
+		return restTemplate.getForObject(URL+"getFood", List.class);
 	}
 }

@@ -1,13 +1,16 @@
 package com.project.RestaurantFrontend.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.RestaurantFrontend.dao.AppDao;
+import com.project.RestaurantFrontend.entity.Food_Dish;
 import com.project.RestaurantFrontend.entity.User;
 import com.project.RestaurantFrontend.prevalent.CurrentUser;
 
@@ -47,6 +50,13 @@ public class AppController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("/food")
+	public String food(Model m){
+		Integer mobile_number=CurrentUser.MOBILE_NUMBER;
+		List<Food_Dish> list=appDao.getAllFood();  
+        m.addAttribute("list",list);
+		return "menu";
+	}
 	public boolean notLoggedIn() {
 		return CurrentUser.MOBILE_NUMBER==null;
 	}
