@@ -17,7 +17,7 @@
     <tr>
     <td>${food.name}</td>
     <td>${food.price}</td>
-    <td><a href="editfood/${food.id}">Edit</a></td>
+    <td><a href="editfood?id=${food.id}">Edit</a></td>
     <td><a href="deletefood/${food.id}">Delete</a></td>
     </tr>
     </c:forEach>

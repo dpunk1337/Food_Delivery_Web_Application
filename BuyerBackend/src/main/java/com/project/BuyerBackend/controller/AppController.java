@@ -106,5 +106,18 @@ public class AppController {
 		}
 		return ordersObjectNode.toPrettyString();
 	}
+	
+	@GetMapping("/deliveryAgentBackend/getOrders/{mobileNumber}")
+	public List<Orders> deliveryAgentGetOrders(@PathVariable Integer mobileNumber) {
+		List<Orders> orders= appService.getOrdersForDeliveryAgent(mobileNumber);		
+		return orders;
+	}
+	
+	@GetMapping("/deliveryAgentBackend/getBuyerAddress/{mobileNumber}")
+	public String deliveryAgentGetBuyerAddress(@PathVariable Integer mobileNumber) {
+		Buyer buyer=appService.getBuyer(mobileNumber);
+		if(buyer==null)return " ";
+		return buyer.getAddress();
+	}
 
 }

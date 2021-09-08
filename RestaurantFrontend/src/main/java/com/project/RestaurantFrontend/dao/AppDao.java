@@ -79,8 +79,7 @@ public class AppDao {
 	
 	public void updateFood(Food_Dish foodDish) {
 		System.out.println(URL+"updateFood/");
-		 restTemplate.postForObject(URL+"updateFood/", foodDish, null);
-		 return;
+		 restTemplate.postForObject(URL+"updateFood/", foodDish, String.class);
 	}
 	
 	

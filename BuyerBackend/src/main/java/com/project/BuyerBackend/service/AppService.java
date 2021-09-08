@@ -87,4 +87,8 @@ public class AppService {
 		return ordersDAO.restaurantGetOrders(mobileNumber);
 	}
 
+	public List<Orders> getOrdersForDeliveryAgent(Integer mobileNumber) {
+		return ordersDAO.deliveryAgentGetOrders(mobileNumber);
+	}
+
 }

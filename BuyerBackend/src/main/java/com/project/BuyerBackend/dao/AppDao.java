@@ -27,8 +27,7 @@ public class AppDao {
 	private static final String RESTAURANT_URL = "http://localhost:8083/buyerBackend/";
 	
 	public DeliveryAgent getAvailableDeliveryAgentInCity(String buyerCity) {
-//		return restTemplate.getForObject(URL+"getAvailableDeliveryAgent/"+buyerCity, DeliveryAgent.class);
-		return new DeliveryAgent("Johnny Walker",123);
+		return restTemplate.getForObject(DELIVERY_AGENT_URL+"getAvailableDeliveryAgent/"+buyerCity, DeliveryAgent.class);
 	}
 
 	public String buyerGetDishes(Integer mobileNumber) {
@@ -40,10 +39,6 @@ public class AppDao {
 	}
 
 	public void markDeliveryAgentAsAvailable(Integer deliveryAgentMobileNumber) {
-		try {
-			restTemplate.postForObject(DELIVERY_AGENT_URL+"markDeliveryAgentAsAvailable/"+deliveryAgentMobileNumber, deliveryAgentMobileNumber, String.class);
-		} catch (RestClientException e) {
-			e.printStackTrace();
-		}
+		restTemplate.postForObject(DELIVERY_AGENT_URL+"markDeliveryAgentAsAvailable/"+deliveryAgentMobileNumber, deliveryAgentMobileNumber, String.class);
 	}
 }

@@ -10,27 +10,20 @@
 </head>
 <body>
 <h2>Edit Dish</h2>
-<form:form method="post" action="/RestaurantFrontend/update">
+<form:form method="post" action="update">
 <table>
-	<tr>
-	<td></td>
-	<td><form:hidden path="id"/></td>
-	<tr>
-	<td></td>
-	<td><form:hidden path="name"/></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td><form:hidden path="mobile_number"/></td>
-	</tr>
-	<tr>
-	<td>Price</td>
-	<td><form:input path="price"/></td>
-	</tr>
-	<tr>
-	<td></td>
-	<td><input type="submit" value="update" /></td>
-	</tr>
+		<tr>
+			<td>Enter Name :</td>
+			<td><form:input path="name"/></td>
+		</tr>
+		<tr>
+			<td>Enter Price :</td>
+			<td><form:input path="price"/></td>
+		</tr>
+		<tr>
+			<td><form:hidden path="id"/><form:hidden path="mobile_number"/></td>
+			<td><input type="submit" value="Save Changes"/></td>
+		</tr>
 </table>
 </form:form>
 </body>

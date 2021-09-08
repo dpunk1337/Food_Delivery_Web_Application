@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.DeliveryAgentFrontend.entity.Orders;
 import com.project.DeliveryAgentFrontend.entity.User;
+import com.project.DeliveryAgentFrontend.prevalent.CurrentUser;
 
 @Repository
 public class AppDao {
@@ -43,9 +44,6 @@ public class AppDao {
 	}
 
 	public List<Orders> getOrders() {
-		// TODO Auto-generated method stub
-		List<Orders> orders = new ArrayList<Orders>(Arrays.asList(new Orders("1234", "Dal fry", "available", "delhi", "delhi" ))		
-				);
-		return orders;
+		return Arrays.asList(restTemplate.getForObject(URL+"getOrders/"+CurrentUser.MOBILE_NUMBER, Orders[].class));
 	}
 }

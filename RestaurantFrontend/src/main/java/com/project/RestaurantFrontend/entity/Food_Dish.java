@@ -44,6 +44,10 @@ public class Food_Dish {
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Override
+	public String toString() {
+		return "Food_Dish [id=" + id + ", mobile_number=" + mobile_number + ", price=" + price + ", name=" + name + "]";
+	}
 	
 	
 }

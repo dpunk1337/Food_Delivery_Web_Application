@@ -61,7 +61,7 @@ public class AppController {
 		return appService.deleteFoodDish(id);
 	}
 	
-	@PutMapping("/restaurantFrontend/updateFood")
+	@PostMapping("/restaurantFrontend/updateFood")
 	public String updatefood(@RequestBody Food_Dish foodDish) {
 		return appService.updateFoodDish(foodDish);
 	}
@@ -103,5 +103,12 @@ public class AppController {
 	public String restaurantMarkAsPickedUp(@PathVariable("orderId") String orderId) {
 		appService.restaurantMarkAsPickedUp(orderId);
 		return null;
+	}
+	
+	@GetMapping("/deliveryAgentBackend/getRestaurantAddress/{mobileNumber}")
+	public String deliveryAgentGetBuyerAddress(@PathVariable Integer mobileNumber) {
+		Restaurant restaurant=appService.getRestaurant(mobileNumber);
+		if(restaurant==null)return " ";
+		return restaurant.getAddress();
 	}
 }

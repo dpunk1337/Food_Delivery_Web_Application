@@ -61,8 +61,8 @@ public class AppController {
 		return "addMenu";
 	}
 	
-	@RequestMapping("/editfood/{id}")
-	public String edit(@PathVariable String id,Model m) {
+	@RequestMapping("/editfood")
+	public String edit(@RequestParam("id") String id,Model m) {
 		Food_Dish foodDish=appDao.getOneFood(id);
 		System.out.println(foodDish);
 		m.addAttribute("command", foodDish);
