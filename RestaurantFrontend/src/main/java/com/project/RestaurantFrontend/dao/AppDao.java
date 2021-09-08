@@ -63,7 +63,6 @@ public class AppDao {
 		 restTemplate.delete(URL+"deleteFood/"+id);
 		 return;
 	}
-<<<<<<< Updated upstream
 
 	public List<Food_Dish> getAllFoodOfRestaurant(Integer mobile_number) {
 		System.out.println(URL+"getFoodOfRestaurant/"+mobile_number);
@@ -77,7 +76,6 @@ public class AppDao {
 	public void markOrderAsPickedUp(String orderId) {
 		restTemplate.postForObject(URL+"markOrderAsPickedUp/"+orderId, orderId, String.class);
 	}
-=======
 	
 	public void updateFood(Food_Dish foodDish) {
 		System.out.println(URL+"updateFood/");
@@ -86,5 +84,4 @@ public class AppDao {
 	}
 	
 	
->>>>>>> Stashed changes
 }
