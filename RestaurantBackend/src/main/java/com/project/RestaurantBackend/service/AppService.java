@@ -29,6 +29,10 @@ public class AppService {
 		return opt.get();
 	}
 	
+	public Food_Dish getOneFoodDish(String id) {
+		return foodDAO.findById(id).get();
+	}
+	
 	public List<Food_Dish> getFoodDish() {
 		return foodDAO.findAll();
 	}

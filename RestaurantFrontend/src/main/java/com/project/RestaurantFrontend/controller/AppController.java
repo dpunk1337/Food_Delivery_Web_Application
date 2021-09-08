@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.RestaurantFrontend.dao.AppDao;
@@ -60,6 +61,14 @@ public class AppController {
 		return "addMenu";
 	}
 	
+	@RequestMapping("/editfood/{id}")
+	public String edit(@PathVariable String id,Model m) {
+		Food_Dish foodDish=appDao.getOneFood(id);
+		System.out.println(foodDish);
+		m.addAttribute("command", foodDish);
+		return "updateFood";
+	}
+	
 	@RequestMapping("/add")
 	public String Menuadd(@ModelAttribute Food_Dish foodDish){
 		if(notLoggedIn())return "login";
@@ -74,6 +83,12 @@ public class AppController {
 	public String Menudelete(@PathVariable String id){
 		if(notLoggedIn())return "login";
 		appDao.deleteFood(id);
+		return "redirect:/food";
+	}
+	
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+	public String MenuUpdate(@ModelAttribute("foodDish") Food_Dish foodDish){
+		appDao.updateFood(foodDish);
 		return "redirect:/food";
 	}
 	

@@ -36,6 +36,11 @@ public class AppController {
 		return restaurantObjectNode.toPrettyString();
 	}
 	
+	@GetMapping("/restaurantFrontend/getFood/{id}")
+	public Food_Dish onefoodGet(@PathVariable String id) {
+		return appService.getOneFoodDish(id);
+	}
+	
 	@GetMapping("/restaurantFrontend/getFood")
 	public List<Food_Dish> foodGet() {
 		return appService.getFoodDish();
