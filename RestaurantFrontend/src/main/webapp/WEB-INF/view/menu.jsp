@@ -17,12 +17,12 @@
     <tr>
     <td>${food.name}</td>
     <td>${food.price}</td>
-    <td><a href="editfood/${food.mobile_number}">Edit</a></td>
-    <td><a href="deletefood/${food.mobile_number}">Delete</a></td>
+    <td><a href="editfood/${food.id}">Edit</a></td>
+    <td><a href="deletefood/${food.id}">Delete</a></td>
     </tr>
     </c:forEach>
     </table>
     <br/>
-
+	<a href="addmenu">Add New Dish</a>
 </body>
 </html>
