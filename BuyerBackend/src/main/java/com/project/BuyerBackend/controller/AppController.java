@@ -76,6 +76,7 @@ public class AppController {
 	@PostMapping("/buyerFrontend/markOrderAsReceived/{orderId}")
 	public String buyerMarkAsReceived(@PathVariable("orderId") String orderId) {
 		appService.updateOrderStatus(orderId,"delivered");
+		appService.markDeliveryAgentAsAvailable(orderId);
 		return null;
 	}
 	

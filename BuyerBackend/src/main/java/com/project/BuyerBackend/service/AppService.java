@@ -71,4 +71,12 @@ public class AppService {
 		ordersDAO.save(order);
 	}
 
+	public void markDeliveryAgentAsAvailable(String orderId) {
+		Optional<Orders> orderOpt=ordersDAO.findById(orderId);
+		if(!orderOpt.isPresent())return;
+		Orders order=orderOpt.get();
+		appDao.markDeliveryAgentAsAvailable(order.getDeliveryAgentMobileNumber());
+		
+	}
+
 }
