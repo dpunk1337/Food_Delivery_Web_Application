@@ -9,10 +9,10 @@ import javax.persistence.Table;
 @Table(name="food_dish")
 public class Food_Dish {
 	
-	
+	@Id
 	@Column(name="dish_id")
 	private String id;
-	@Id
+	
 	@Column
 	private Integer mobile_number;
 	@Column

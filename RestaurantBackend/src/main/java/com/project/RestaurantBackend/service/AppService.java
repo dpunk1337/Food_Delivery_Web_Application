@@ -27,6 +27,21 @@ public class AppService {
 	
 	public List<Food_Dish> getFoodDish() {
 		return foodDAO.findAll();
-		
+	}
+	
+	public String addFoodDish(Food_Dish foodDish) {
+		foodDAO.save(foodDish);
+		return "New FoodDish has been added to Database, whose name is :"+foodDish.getName();
+	}
+	
+	public String deleteFoodDish(String id) {
+		Food_Dish foodDish=foodDAO.findById(id).get();
+		foodDAO.delete(foodDish);
+		return "FoodDish is deleted with Food id  :"+foodDish.getId();
+	}
+	
+	public String updateFoodDish(Food_Dish foodDish) {
+		foodDAO.save(foodDish);
+		return "FoodDish is update id : "+foodDish.getId();
 	}
 }

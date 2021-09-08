@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.project.RestaurantBackend.entity.Food_Dish;
 
-public interface FoodDAO extends JpaRepository<Food_Dish, Integer> {
+public interface FoodDAO extends JpaRepository<Food_Dish, String> {
 
 }
