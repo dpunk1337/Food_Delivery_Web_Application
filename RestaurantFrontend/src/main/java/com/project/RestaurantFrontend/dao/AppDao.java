@@ -1,6 +1,7 @@
 package com.project.RestaurantFrontend.dao;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.RestaurantFrontend.entity.Food_Dish;
+import com.project.RestaurantFrontend.entity.Orders;
 import com.project.RestaurantFrontend.entity.User;
+import com.project.RestaurantFrontend.prevalent.CurrentUser;
 
 @Repository
 public class AppDao {
@@ -54,5 +57,18 @@ public class AppDao {
 		System.out.println(URL+"deleteFood/"+id);
 		 restTemplate.delete(URL+"deleteFood/"+id);
 		 return;
+	}
+
+	public List<Food_Dish> getAllFoodOfRestaurant(Integer mobile_number) {
+		System.out.println(URL+"getFoodOfRestaurant/"+mobile_number);
+		return restTemplate.getForObject(URL+"getFoodOfRestaurant/"+mobile_number, List.class);
+	}
+
+	public List<Orders> getOrders() {
+		return Arrays.asList(restTemplate.getForObject(URL+"getOrders/"+CurrentUser.MOBILE_NUMBER, Orders[].class));
+	}
+
+	public void markOrderAsPickedUp(String orderId) {
+		restTemplate.postForObject(URL+"markOrderAsPickedUp/"+orderId, orderId, String.class);
 	}
 }

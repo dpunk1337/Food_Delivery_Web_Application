@@ -22,7 +22,9 @@ public class AppDao {
 		return new RestTemplate();
 	}
 	
-	private static final String URL = "http://localhost:8085/buyerBackend/";
+	private static final String DELIVERY_AGENT_URL = "http://localhost:8085/buyerBackend/";
+	
+	private static final String RESTAURANT_URL = "http://localhost:8083/buyerBackend/";
 	
 	public DeliveryAgent getAvailableDeliveryAgentInCity(String buyerCity) {
 //		return restTemplate.getForObject(URL+"getAvailableDeliveryAgent/"+buyerCity, DeliveryAgent.class);
@@ -30,20 +32,17 @@ public class AppDao {
 	}
 
 	public String buyerGetDishes(Integer mobileNumber) {
-//		return restTemplate.getForObject(URL+"getDishes/"+mobileNumber, String.class);
-		return "[ { \"dishId\": \"1\", \"name\": \"Tandoori Chicken\", \"price\": 400 }, { \"dishId\": \"2\", \"name\": \"Shahi Paneer\", \"price\": 300 }, { \"dishId\": \"3\", \"name\": \"Briyani\", \"price\": 200 }, { \"dishId\": \"4\", \"name\": \"Pizza\", \"price\": 100 }, { \"dishId\": \"5\", \"name\": \"Coffee\", \"price\": 50 } ]";
+		return restTemplate.getForObject(RESTAURANT_URL+"getDishes/"+mobileNumber, String.class);
 	}
 
 	public String buyerGetRestaurantsInCity(String city) {
-//		return restTemplate.getForObject(URL+"getRestaurantsInCity/"+city,String.class);
-		return "[ { \"mobileNumber\": 1, \"name\": \"KFC\" }, { \"mobileNumber\": 2, \"name\": \"Dominos\" }, { \"mobileNumber\": 3, \"name\": \"Mc Donalds\" }, { \"mobileNumber\": 4, \"name\": \"Burger King\" }, { \"mobileNumber\": 5, \"name\": \"Subway\" }, { \"mobileNumber\": 6, \"name\": \"Los Pollos Hermanos\" } ]";
+		return restTemplate.getForObject(RESTAURANT_URL+"getRestaurantsInCity/"+city,String.class);
 	}
 
 	public void markDeliveryAgentAsAvailable(Integer deliveryAgentMobileNumber) {
 		try {
-			restTemplate.postForObject(URL+"markDeliveryAgentAsAvailable/"+deliveryAgentMobileNumber, deliveryAgentMobileNumber, String.class);
+			restTemplate.postForObject(DELIVERY_AGENT_URL+"markDeliveryAgentAsAvailable/"+deliveryAgentMobileNumber, deliveryAgentMobileNumber, String.class);
 		} catch (RestClientException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

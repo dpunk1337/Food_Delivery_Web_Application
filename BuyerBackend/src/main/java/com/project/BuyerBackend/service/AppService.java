@@ -83,4 +83,8 @@ public class AppService {
 		buyerDAO.save(buyer);	
 	}
 
+	public List<Orders> getOrdersForRestaurant(Integer mobileNumber) {
+		return ordersDAO.restaurantGetOrders(mobileNumber);
+	}
+
 }

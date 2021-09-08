@@ -13,5 +13,12 @@ public interface OrdersDAO extends JpaRepository<Orders, String>  {
 
 	@Query(value = "SELECT * FROM orders u WHERE u.buyer_mobile_number =?1", nativeQuery = true)
 	List<Orders> buyerGetOrders(Integer mobileNumber);
+
+	@Query(value = "SELECT * FROM orders u WHERE u.restaurant_mobile_number =?1", nativeQuery = true)
+	List<Orders> restaurantGetOrders(Integer mobileNumber);
+	
+	@Query(value = "SELECT * FROM orders u WHERE u.delivery_agent_mobile_number =?1", nativeQuery = true)
+	List<Orders> deliveryAgentGetOrders(Integer mobileNumber);
+
 	
 }

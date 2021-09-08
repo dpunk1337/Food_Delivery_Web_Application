@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.project.RestaurantBackend.entity.Food_Dish;
 import com.project.RestaurantBackend.entity.Restaurant;
@@ -40,6 +41,11 @@ public class AppController {
 		return appService.getFoodDish();
 	}
 	
+	@GetMapping("/restaurantFrontend/getFoodOfRestaurant/{mobileNumber}")
+	public List<Food_Dish> foodGetOfRestaurant(@PathVariable Integer mobileNumber) {
+		return appService.getFoodDishForRestaurant(mobileNumber);
+	}
+	
 	@PostMapping("/restaurantFrontend/addFood")
 	public String addfood(@RequestBody Food_Dish foodDish){
 		return appService.addFoodDish(foodDish);
@@ -53,5 +59,44 @@ public class AppController {
 	@PutMapping("/restaurantFrontend/updateFood")
 	public String updatefood(@RequestBody Food_Dish foodDish) {
 		return appService.updateFoodDish(foodDish);
+	}
+	
+	//buyer backend apis
+	@GetMapping("/buyerBackend/getDishes/{mobileNumber}")
+	public String buyerGetDishes(@PathVariable Integer mobileNumber) {
+		List<Food_Dish> dishes=appService.getFoodDishForRestaurant(mobileNumber);
+		ArrayNode dishesObjectNode=objectMapper.createArrayNode();
+		for(Food_Dish dish: dishes) {
+			ObjectNode childNode=objectMapper.createObjectNode();
+			childNode.put("dishId",dish.getId());
+			childNode.put("name",dish.getName());
+			childNode.put("price",dish.getPrice());
+			dishesObjectNode.add(childNode);
+		}
+		return dishesObjectNode.toPrettyString();
+	}
+
+	@GetMapping("/buyerBackend/getRestaurantsInCity/{city}")
+	public String buyerGetRestaurantsInCity(@PathVariable String city) {
+		List<Restaurant> restaurants=appService.getRestaurantsInCity(city);
+		ArrayNode restaurantsObjectNode=objectMapper.createArrayNode();
+		for(Restaurant restaurant: restaurants) {
+			ObjectNode childNode=objectMapper.createObjectNode();
+			childNode.put("mobileNumber",restaurant.getMobileNumber());
+			childNode.put("name",restaurant.getName());
+			restaurantsObjectNode.add(childNode);
+		}
+		return restaurantsObjectNode.toPrettyString();
+	}
+	
+	@GetMapping("/restaurantFrontend/getOrders/{mobileNumber}")
+	public String restaurantGetOrders(@PathVariable Integer mobileNumber) {
+		return appService.getOrders(mobileNumber);
+	}
+	
+	@PostMapping("/restaurantFrontend/markOrderAsPickedUp/{orderId}")
+	public String restaurantMarkAsPickedUp(@PathVariable("orderId") String orderId) {
+		appService.restaurantMarkAsPickedUp(orderId);
+		return null;
 	}
 }

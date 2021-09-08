@@ -87,10 +87,24 @@ public class AppController {
 	}
 	
 	//Restaurant apis
-	@PostMapping("/restaurantFrontend/markOrderAsPickedUp/{orderId}")
+	@PostMapping("/restaurantBackend/markOrderAsPickedUp/{orderId}")
 	public String restaurantMarkAsPickedUp(@PathVariable("orderId") String orderId) {
 		appService.updateOrderStatus(orderId,"with delivery agent");
 		return null;
+	}
+	
+	@GetMapping("/restaurantBackend/getOrders/{mobileNumber}")
+	public String restaurantGetOrders(@PathVariable Integer mobileNumber) {
+		List<Orders> orders= appService.getOrdersForRestaurant(mobileNumber);		
+		ArrayNode ordersObjectNode=objectMapper.createArrayNode();
+		for(Orders order: orders) {
+			ObjectNode childNode=objectMapper.createObjectNode();
+			childNode.put("orderId",order.getOrderId());
+			childNode.put("items",order.getItems());
+			childNode.put("status",order.getStatus());
+			ordersObjectNode.add(childNode);
+		}
+		return ordersObjectNode.toPrettyString();
 	}
 
 }

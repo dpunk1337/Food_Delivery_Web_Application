@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.RestaurantBackend.dao.AppDao;
 import com.project.RestaurantBackend.dao.FoodDAO;
 import com.project.RestaurantBackend.dao.RestaurantDAO;
 import com.project.RestaurantBackend.entity.Food_Dish;
@@ -18,6 +19,9 @@ public class AppService {
 	
 	@Autowired
 	FoodDAO foodDAO;
+	
+	@Autowired
+	AppDao appDao;
 	
 	public Restaurant getRestaurant(Integer mobileNumber) {
 		Optional<Restaurant> opt= restaurantDAO.findById(mobileNumber);
@@ -43,5 +47,21 @@ public class AppService {
 	public String updateFoodDish(Food_Dish foodDish) {
 		foodDAO.save(foodDish);
 		return "FoodDish is update id : "+foodDish.getId();
+	}
+
+	public List<Food_Dish> getFoodDishForRestaurant(Integer mobileNumber) {
+		return foodDAO.getDishesForRestaurant(mobileNumber);
+	}
+
+	public List<Restaurant> getRestaurantsInCity(String city) {
+		return restaurantDAO.getRestaurantsInCity(city);
+	}
+
+	public String getOrders(Integer mobileNumber) {
+		return appDao.getOrders(mobileNumber);
+	}
+
+	public void restaurantMarkAsPickedUp(String orderId) {
+		appDao.restaurantMarkAsPickedUp(orderId);		
 	}
 }
