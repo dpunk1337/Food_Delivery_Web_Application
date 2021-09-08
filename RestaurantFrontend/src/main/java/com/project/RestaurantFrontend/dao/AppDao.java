@@ -44,4 +44,15 @@ public class AppDao {
 		System.out.println(URL+"getFood/");
 		return restTemplate.getForObject(URL+"getFood", List.class);
 	}
+	
+	public String addFood(Food_Dish foodDish) {
+		System.out.println(URL+"addFood/");
+		return restTemplate.postForObject(URL+"addFood/", foodDish, String.class);
+	}
+	
+	public void deleteFood(String id) {
+		System.out.println(URL+"deleteFood/"+id);
+		 restTemplate.delete(URL+"deleteFood/"+id);
+		 return;
+	}
 }

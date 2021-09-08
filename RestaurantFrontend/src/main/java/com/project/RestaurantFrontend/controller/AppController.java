@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -48,6 +50,26 @@ public class AppController {
 		CurrentUser.PASSWORD=null;
 		CurrentUser.currentUser=null;
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/addmenu")
+	public String menu() {
+		return "addMenu";
+	}
+	
+	@RequestMapping("/add")
+	public String Menuadd(@ModelAttribute Food_Dish foodDish){
+		Integer mobile_number=CurrentUser.MOBILE_NUMBER;
+		foodDish.setMobile_number(mobile_number);
+		foodDish.setId(mobile_number+foodDish.getName());
+		appDao.addFood(foodDish);
+		return "redirect:/food";
+	}
+	
+	@RequestMapping("/deletefood/{id}")
+	public String Menuadd(@PathVariable String id){
+		appDao.deleteFood(id);
+		return "redirect:/food";
 	}
 	
 	@RequestMapping("/food")
