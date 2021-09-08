@@ -9,5 +9,6 @@
 <body>
 	<h1>Welcome To Home Page</h1>
 	<h3><a href="/logout">Logout</a></h3>
+	<h3><a href="/orders">Orders</a></h3>
 </body>
 </html>
