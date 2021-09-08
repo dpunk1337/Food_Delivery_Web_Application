@@ -77,4 +77,8 @@ public class AppDao {
 	public void markOrderAsReceived(String orderId) {
 		restTemplate.postForObject(URL+"markOrderAsReceived/"+orderId, orderId, String.class);
 	}
+
+	public void addUser(User user) {
+		restTemplate.postForObject(URL+"saveUser/",user, String.class);		
+	}
 }

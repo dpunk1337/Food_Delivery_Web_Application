@@ -34,6 +34,12 @@ public class AppController {
 		return buyer;
 	}
 	
+	@PostMapping("/buyerFrontend/saveUser/")
+	public String buyerSaveUser(@RequestBody Buyer buyer) {
+		appService.saveBuyer(buyer);
+		return null;
+	}
+	
 	@PostMapping("/buyerFrontend/placeOrder")
 	public String placeOrder(@RequestParam("mobileNumber") Integer buyerMobileNumber,
 			@RequestParam("city") String buyerCity,

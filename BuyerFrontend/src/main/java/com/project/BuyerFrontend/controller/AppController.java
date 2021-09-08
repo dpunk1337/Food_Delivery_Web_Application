@@ -78,6 +78,17 @@ public class AppController {
 		return CurrentUser.MOBILE_NUMBER==null;
 	}
 	
+	@RequestMapping("/signUp")
+	public String signUp(){
+		return "signUp";
+	}
+	
+	@RequestMapping(value = "/signUpSubmit", method = RequestMethod.POST )
+	public String signUpSubmit(@ModelAttribute User user) {
+		appDao.addUser(user);
+		return "signUpSuccessful";
+	}
+	
 	@RequestMapping("/seeRestaurants")
 	public String seeRestaurants(Model model) {
 		if(notLoggedIn())return "login";

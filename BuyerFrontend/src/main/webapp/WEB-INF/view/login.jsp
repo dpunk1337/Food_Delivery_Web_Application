@@ -14,6 +14,7 @@ Mobile Number : <input type="number" name="mobile_number" /> <br>
 Password <input type="text" name="password" />  <br>
 			
 <input type="submit" value="login" /><br>
+<a href="/signUp">Sign Up</a>
 			
 </form>
 </body>

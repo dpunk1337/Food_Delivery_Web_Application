@@ -4,13 +4,16 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.project.BuyerBackend.entity.DeliveryAgent;
 
 @Repository
 public class AppDao {
+	@Lazy
 	@Autowired
 	RestTemplate restTemplate;
 	
@@ -37,6 +40,11 @@ public class AppDao {
 	}
 
 	public void markDeliveryAgentAsAvailable(Integer deliveryAgentMobileNumber) {
-		restTemplate.postForObject(URL+"markDeliveryAgentAsAvailable/"+deliveryAgentMobileNumber, deliveryAgentMobileNumber, String.class);
+		try {
+			restTemplate.postForObject(URL+"markDeliveryAgentAsAvailable/"+deliveryAgentMobileNumber, deliveryAgentMobileNumber, String.class);
+		} catch (RestClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

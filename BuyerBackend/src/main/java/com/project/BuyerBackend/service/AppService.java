@@ -79,4 +79,8 @@ public class AppService {
 		
 	}
 
+	public void saveBuyer(Buyer buyer) {
+		buyerDAO.save(buyer);	
+	}
+
 }
