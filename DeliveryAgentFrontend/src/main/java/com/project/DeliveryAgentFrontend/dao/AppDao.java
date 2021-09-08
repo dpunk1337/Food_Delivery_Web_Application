@@ -1,6 +1,9 @@
 package com.project.DeliveryAgentFrontend.dao;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.DeliveryAgentFrontend.entity.Orders;
 import com.project.DeliveryAgentFrontend.entity.User;
 
 @Repository
@@ -36,5 +40,12 @@ public class AppDao {
 		System.out.println(URL+"getUser/"+mobileNumber);
 		User user=restTemplate.getForObject(URL+"getUser/"+mobileNumber, User.class);
 		return user;
+	}
+
+	public List<Orders> getOrders() {
+		// TODO Auto-generated method stub
+		List<Orders> orders = new ArrayList<Orders>(Arrays.asList(new Orders("1234", "Dal fry", "available", "delhi", "delhi" ))		
+				);
+		return orders;
 	}
 }
