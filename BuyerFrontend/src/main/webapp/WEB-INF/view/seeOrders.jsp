@@ -16,7 +16,7 @@
 			<td>${order.orderId}</td>
 			<td>${order.items}</td>
 			<td>${order.status}</td>
-			<td><a href="editstudent/${student.roll}">Mark As Received</a></td>
+			<td><a href="markAsReceived/${order.orderId}">Mark As Received</a></td>
 		</tr>
 	</c:forEach>
 </table>

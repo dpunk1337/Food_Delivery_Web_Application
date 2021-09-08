@@ -48,11 +48,7 @@ public class AppDao {
 	}
 	
 	public List<Restaurant> getRestaurantsInCity(){
-		return new ArrayList<>(Arrays.asList(
-				new Restaurant(1,"Dominoes"),
-				new Restaurant(2,"Mc Donalds"),
-				new Restaurant(3,"KFC")
-				));
+		return Arrays.asList(restTemplate.getForObject(URL+"getRestaurants/"+CurrentUser.currentUser.getCity(), Restaurant[].class));
 		
 	}
 
@@ -60,16 +56,25 @@ public class AppDao {
 		return Arrays.asList(restTemplate.getForObject(URL+"getDishes/"+mobileNumber, Dish[].class));
 	}
 	
+	
 	public void placeOrder(String orderItems,Integer restaurantMobileNumber) {
 		restTemplate.postForObject(
 				URL+
 				"placeOrder?mobileNumber="+CurrentUser.MOBILE_NUMBER
-				+"&city="+"chandigarh"
+				+"&city="+CurrentUser.currentUser.getCity()
 				+"&restaurantMobileNumber="+restaurantMobileNumber, 
 				orderItems, String.class);
 	}
 
 	public List<Orders> getOrders() {
 		return Arrays.asList(restTemplate.getForObject(URL+"getOrders/"+CurrentUser.MOBILE_NUMBER, Orders[].class));
+	}
+
+	public void updateUser(User user) {
+		restTemplate.postForObject(URL+"updateProfile/"+CurrentUser.currentUser.getMobileNumber(),user, String.class);		
+	}
+
+	public void markOrderAsReceived(String orderId) {
+		restTemplate.postForObject(URL+"markOrderAsReceived/"+orderId, orderId, String.class);
 	}
 }

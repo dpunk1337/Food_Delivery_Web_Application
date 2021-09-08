@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,6 +80,7 @@ public class AppController {
 	
 	@RequestMapping("/seeRestaurants")
 	public String seeRestaurants(Model model) {
+		if(notLoggedIn())return "login";
 		List<Restaurant>restaurants=appDao.getRestaurantsInCity();
 		model.addAttribute("restaurants", restaurants);
 		return "seeRestaurants";
@@ -86,6 +88,7 @@ public class AppController {
 	
 	@RequestMapping("/seeRestaurant")
 	public String seeRestaurant(@RequestParam("mobileNumber")Integer mobileNumber,Model model) {
+		if(notLoggedIn())return "login";
 		List<Dish> dishes=appDao.getDishesInRestaurant(mobileNumber);
 		OrderItems orderItems=new OrderItems(dishes,true);
 		model.addAttribute("mobileNumber", mobileNumber);
@@ -95,8 +98,8 @@ public class AppController {
 	
 	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST )
 	public String placeOrder(@RequestParam("mobileNumber") Integer mobileNumber,@ModelAttribute("orderItems") OrderItems orderItems) {
+		if(notLoggedIn())return "login";
 		List<OrderItem> orderItemsList=orderItems.getOrderItemsList();
-		System.out.println(orderItemsList.size());
 		List<OrderItem> validOrders=new ArrayList<OrderItem>();
 		for(OrderItem item:orderItemsList) {
 			if(item.getQuantity()<=0)continue;
@@ -112,9 +115,34 @@ public class AppController {
 	
 	@RequestMapping(value ="/seeOrders")
 	public String seeOrders(Model model) {
+		if(notLoggedIn())return "login";
 		List<Orders> orders=appDao.getOrders();
 		model.addAttribute("orders",orders);
 		return "seeOrders";
 	}
+	
+	@RequestMapping(value ="/editProfile")
+	public String seeEditProfilePage(Model model) {
+		if(notLoggedIn())return "login";
+		model.addAttribute("command",CurrentUser.currentUser);
+		return "editProfile";
+	}
+	
+	@RequestMapping(value = "/updateProfile", method = RequestMethod.POST )
+	public String updateProfile(@ModelAttribute("command") User user) {
+		if(notLoggedIn())return "login";
+		CurrentUser.currentUser=user;
+		appDao.updateUser(user);
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/markAsReceived/{orderId}")
+	public String markOrderAsReceived(@PathVariable String orderId) {
+		if(notLoggedIn())return "login";
+		appDao.markOrderAsReceived(orderId);
+		return "redirect:/seeOrders";
+	}
+	
+	
 
 }

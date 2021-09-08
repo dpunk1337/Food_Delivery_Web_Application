@@ -28,13 +28,10 @@ public class AppController {
 	ObjectMapper objectMapper;
 	
 	@GetMapping("/buyerFrontend/getUser/{mobileNumber}")
-	public String buyerGetUser(@PathVariable Integer mobileNumber) {
+	public Buyer buyerGetUser(@PathVariable Integer mobileNumber) {
 		Buyer buyer=appService.getBuyer(mobileNumber);
 		if(buyer==null)return null;
-		ObjectNode buyerObjectNode=objectMapper.createObjectNode();
-		buyerObjectNode.put("mobileNumber",buyer.getMobileNumber());
-		buyerObjectNode.put("password",buyer.getPassword());
-		return buyerObjectNode.toPrettyString();
+		return buyer;
 	}
 	
 	@PostMapping("/buyerFrontend/placeOrder")
@@ -62,23 +59,31 @@ public class AppController {
 	
 	@GetMapping("/buyerFrontend/getDishes/{mobileNumber}")
 	public String buyerGetDishes(@PathVariable Integer mobileNumber) {
-//		List<Orders> orders= appService.getOrders(mobileNumber);	
-//		List<>
-//		ArrayNode ordersObjectNode=objectMapper.createArrayNode();
-//		for(Orders order: orders) {
-//			ObjectNode childNode=objectMapper.createObjectNode();
-//			childNode.put("orderId",order.getOrderId());
-//			childNode.put("items",order.getItems());
-//			childNode.put("status",order.getStatus());
-//			ordersObjectNode.add(childNode);
-//		}
-//		return ordersObjectNode.toPrettyString();
-		return " ";
+		return appService.buyerGetDishes(mobileNumber);
 	}
-//	return new ArrayList<>(Arrays.asList(
-//			new Dish("1","Tandoori Chicken",400),
-//			new Dish("2","Shahi Paneer",300),
-//			new Dish("3","Korma",200)
-//			));
+	
+	@GetMapping("/buyerFrontend/getRestaurants/{city}")
+	public String buyerGetRestaurantsInCity(@PathVariable String city) {
+		return appService.buyerGetRestaurantsInCity(city);
+	}
+	
+	@PostMapping("/buyerFrontend/updateProfile/{mobileNumber}")
+	public String placeOrder(@PathVariable("mobileNumber") Integer buyerMobileNumber,@RequestBody Buyer buyer) {
+		appService.updateBuyer(buyerMobileNumber,buyer);
+		return null;
+	}
+	
+	@PostMapping("/buyerFrontend/markOrderAsReceived/{orderId}")
+	public String buyerMarkAsReceived(@PathVariable("orderId") String orderId) {
+		appService.updateOrderStatus(orderId,"delivered");
+		return null;
+	}
+	
+	//Restaurant apis
+	@PostMapping("/restaurantFrontend/markOrderAsPickedUp/{orderId}")
+	public String restaurantMarkAsPickedUp(@PathVariable("orderId") String orderId) {
+		appService.updateOrderStatus(orderId,"with delivery agent");
+		return null;
+	}
 
 }

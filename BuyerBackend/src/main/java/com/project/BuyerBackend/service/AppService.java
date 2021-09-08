@@ -49,4 +49,26 @@ public class AppService {
 		return ordersDAO.buyerGetOrders(mobileNumber);
 	}
 
+	public String buyerGetDishes(Integer mobileNumber) {		
+		return appDao.buyerGetDishes(mobileNumber);
+	}
+
+	public String buyerGetRestaurantsInCity(String city) {
+		return appDao.buyerGetRestaurantsInCity(city);
+	}
+
+	public void updateBuyer(Integer buyerMobileNumber, Buyer buyer) {
+		buyerDAO.deleteById(buyerMobileNumber);
+		buyerDAO.save(buyer);
+	}
+
+	public void updateOrderStatus(String orderId, String status) {
+		Optional<Orders> orderOpt=ordersDAO.findById(orderId);
+		if(!orderOpt.isPresent())return;
+		Orders order=orderOpt.get();
+		ordersDAO.delete(order);
+		order.setStatus(status);
+		ordersDAO.save(order);
+	}
+
 }

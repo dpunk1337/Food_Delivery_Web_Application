@@ -11,5 +11,6 @@
 	<h3><a href="/logout">Logout</a></h3>
 	<h3><a href="/seeRestaurants">See Restaurants</a></h3>
 	<h3><a href="/seeOrders">See Orders</a></h3>
+	<h3><a href="/editProfile">Edit Profile</a></h3>
 </body>
 </html>
