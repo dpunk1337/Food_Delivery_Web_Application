@@ -1,10 +1,21 @@
 /*
 /*/
 
+!README.md
+
 !.gitignore
+
 !/BuyerBackend/
 !/BuyerFrontend/
 !/RestaurantBackend/
 !/RestaurantFrontend/
 !/DeliveryAgentBackend/
 !/DeliveryAgentFrontend/
+!/EurekaServer/
+!/ZuulGateway/
+
+!MySqlDatabase
+
+!docker-compose.yml
+!kill-all-docker-containers.bat
+!repackage-modules.bat

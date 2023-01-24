@@ -19,13 +19,16 @@ public class Buyer {
 	private String address;
 	@Column
 	private String password;
-	public Buyer(Integer mobileNumber, String name, String city, String address, String password) {
+	@Column
+	private String role;
+	public Buyer(Integer mobileNumber, String name, String city, String address, String password, String role) {
 		super();
 		this.mobileNumber = mobileNumber;
 		this.name = name;
 		this.city = city;
 		this.address = address;
 		this.password = password;
+		this.role = role;
 	}
 	public Buyer() {
 		super();
@@ -60,5 +63,12 @@ public class Buyer {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
 	
 }

@@ -3,4 +3,5 @@
 
 !.gitignore
 !pom.xml
+!Dockerfile
 !/src/

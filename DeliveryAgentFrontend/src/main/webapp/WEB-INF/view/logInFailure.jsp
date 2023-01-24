@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Log In Unsuccessful</title>
+<title>FOOD KA MOOD | Delivery</title>
 </head>
 <body>
 <H1>Log In Unsuccessful.</H1>

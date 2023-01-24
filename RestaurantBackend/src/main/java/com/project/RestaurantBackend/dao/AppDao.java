@@ -3,6 +3,7 @@ package com.project.RestaurantBackend.dao;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
@@ -14,10 +15,11 @@ public class AppDao {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	private static final String BUYER_URL = "http://localhost:8081/restaurantBackend/";
+	private static final String BUYER_URL = "http://BUYER-BACKEND/restaurantBackend/";
 	
-	private static final String RESTAURANT_URL = "http://localhost:8083/restaurantBackend/";
+	private static final String DELIVERY_AGENT_URL = "http://DELIVERY-AGENT-BACKEND/restaurantBackend/";
 	
+	@LoadBalanced
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();

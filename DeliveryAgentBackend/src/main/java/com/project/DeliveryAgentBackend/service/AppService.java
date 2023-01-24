@@ -34,7 +34,7 @@ public class AppService {
 
 	public DeliveryAgent getAvailableDeliveryAgent(String city) {
 		List<DeliveryAgent>availableAgents=deliveryAgentDAO.getAllAvailableDeliveryAgent(city);
-		if(availableAgents.size()==0)return new DeliveryAgent(007,"James Bond",city,"not found","not found","available");
+		if(availableAgents.size()==0)return new DeliveryAgent(007,"James Bond",city,"not found","not found","available","USER");
 		double rand=Math.random()*availableAgents.size();
 		DeliveryAgent chosenOne=availableAgents.get((int)(rand));
 		return chosenOne;

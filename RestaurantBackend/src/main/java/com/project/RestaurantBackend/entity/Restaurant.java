@@ -19,16 +19,19 @@ public class Restaurant {
 	private String address;
 	@Column
 	private String password;
-	public Restaurant(Integer mobileNumber, String name, String city, String address, String password) {
+	@Column
+	private String role;
+	public Restaurant() {
+		super();
+	}
+	public Restaurant(Integer mobileNumber, String name, String city, String address, String password, String role) {
 		super();
 		this.mobileNumber = mobileNumber;
 		this.name = name;
 		this.city = city;
 		this.address = address;
 		this.password = password;
-	}
-	public Restaurant() {
-		super();
+		this.role = role;
 	}
 	public Integer getMobileNumber() {
 		return mobileNumber;
@@ -60,5 +63,12 @@ public class Restaurant {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
 	
 }

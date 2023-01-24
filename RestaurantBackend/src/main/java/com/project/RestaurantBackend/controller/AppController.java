@@ -33,6 +33,8 @@ public class AppController {
 		ObjectNode restaurantObjectNode=objectMapper.createObjectNode();
 		restaurantObjectNode.put("mobileNumber",restaurant.getMobileNumber());
 		restaurantObjectNode.put("password",restaurant.getPassword());
+		restaurantObjectNode.put("role",restaurant.getRole());
+		restaurantObjectNode.put("name",restaurant.getName());
 		return restaurantObjectNode.toPrettyString();
 	}
 	

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
@@ -19,10 +20,11 @@ public class AppDao {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	private static final String BUYER_URL = "http://localhost:8081/deliveryAgentBackend/";
+	private static final String BUYER_URL = "http://BUYER-BACKEND/deliveryAgentBackend/";
 	
-	private static final String RESTAURANT_URL = "http://localhost:8083/deliveryAgentBackend/";
+	private static final String RESTAURANT_URL = "http://RESTAURANT-BACKEND/deliveryAgentBackend/";
 	
+	@LoadBalanced
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();

@@ -4,14 +4,16 @@ public class Orders {
 	String orderId;
 	String items;
 	String status;
-	public Orders(String orderId, String items, String status) {
+	Integer deliveryAgentMobileNumber;
+	public Orders() {
+		super();
+	}
+	public Orders(String orderId, String items, String status, Integer deliveryAgentMobileNumber) {
 		super();
 		this.orderId = orderId;
 		this.items = items;
 		this.status = status;
-	}
-	public Orders() {
-		super();
+		this.deliveryAgentMobileNumber = deliveryAgentMobileNumber;
 	}
 	public String getOrderId() {
 		return orderId;
@@ -31,8 +33,10 @@ public class Orders {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	@Override
-	public String toString() {
-		return "Orders [orderId=" + orderId + ", items=" + items + ", status=" + status + "]";
+	public Integer getDeliveryAgentMobileNumber() {
+		return deliveryAgentMobileNumber;
+	}
+	public void setDeliveryAgentMobileNumber(Integer deliveryAgentMobileNumber) {
+		this.deliveryAgentMobileNumber = deliveryAgentMobileNumber;
 	}
 }

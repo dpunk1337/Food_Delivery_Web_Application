@@ -7,6 +7,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,15 +23,17 @@ import com.project.BuyerFrontend.entity.OrderItem;
 import com.project.BuyerFrontend.entity.Orders;
 import com.project.BuyerFrontend.entity.Restaurant;
 import com.project.BuyerFrontend.entity.User;
-import com.project.BuyerFrontend.prevalent.CurrentUser;
+import com.project.BuyerFrontend.entity.UserInfo;
+//import com.project.BuyerFrontend.prevalent.CurrentUser;
 
 @Repository
 public class AppDao {
-	private static final String URL = "http://localhost:8081/buyerFrontend/";
+	private static final String URL = "http://zuul-gateway:8080/buyer/buyerFrontend/";
 	
 	@Autowired
 	ObjectMapper objectMapper;
 	
+	@Lazy
 	@Autowired
 	private RestTemplate restTemplate;
 
@@ -48,7 +54,8 @@ public class AppDao {
 	}
 	
 	public List<Restaurant> getRestaurantsInCity(){
-		return Arrays.asList(restTemplate.getForObject(URL+"getRestaurants/"+CurrentUser.currentUser.getCity(), Restaurant[].class));
+		UserInfo info=(UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return Arrays.asList(restTemplate.getForObject(URL+"getRestaurants/"+getUser(info.getUid()).getCity(), Restaurant[].class));
 		
 	}
 
@@ -58,20 +65,23 @@ public class AppDao {
 	
 	
 	public void placeOrder(String orderItems,Integer restaurantMobileNumber) {
+		UserInfo info=(UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		restTemplate.postForObject(
 				URL+
-				"placeOrder?mobileNumber="+CurrentUser.MOBILE_NUMBER
-				+"&city="+CurrentUser.currentUser.getCity()
+				"placeOrder?mobileNumber="+info.getUid()
+				+"&city="+getUser(info.getUid()).getCity()
 				+"&restaurantMobileNumber="+restaurantMobileNumber, 
 				orderItems, String.class);
 	}
 
 	public List<Orders> getOrders() {
-		return Arrays.asList(restTemplate.getForObject(URL+"getOrders/"+CurrentUser.MOBILE_NUMBER, Orders[].class));
+		UserInfo info=(UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return Arrays.asList(restTemplate.getForObject(URL+"getOrders/"+info.getUid(), Orders[].class));
 	}
 
 	public void updateUser(User user) {
-		restTemplate.postForObject(URL+"updateProfile/"+CurrentUser.currentUser.getMobileNumber(),user, String.class);		
+		UserInfo info=(UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		restTemplate.postForObject(URL+"updateProfile/"+info.getUid(),user, String.class);		
 	}
 
 	public void markOrderAsReceived(String orderId) {

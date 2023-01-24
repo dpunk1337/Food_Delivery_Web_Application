@@ -21,8 +21,13 @@ public class DeliveryAgent {
 	private String password;
 	@Column
 	private String status;
-	public DeliveryAgent(Integer mobileNumber, String name, String city, String address, String password,
-			String status) {
+	@Column
+	private String role;
+	public DeliveryAgent() {
+		super();
+	}
+	public DeliveryAgent(Integer mobileNumber, String name, String city, String address, String password, String status,
+			String role) {
 		super();
 		this.mobileNumber = mobileNumber;
 		this.name = name;
@@ -30,9 +35,7 @@ public class DeliveryAgent {
 		this.address = address;
 		this.password = password;
 		this.status = status;
-	}
-	public DeliveryAgent() {
-		super();
+		this.role = role;
 	}
 	public Integer getMobileNumber() {
 		return mobileNumber;
@@ -70,6 +73,13 @@ public class DeliveryAgent {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
 	
 	
 }

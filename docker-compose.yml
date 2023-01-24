@@ -1,0 +1,158 @@
+version: '2'
+
+services:
+  buyer-frontend:
+    container_name: buyer-frontend
+    build:
+      context: BuyerFrontend
+      dockerfile: Dockerfile
+    image: buyer-frontend:latest
+    ports:
+      - 18086:8086
+    mem_limit: 512m
+    # cpus: 0.5
+    # mem_reservation: 128M
+
+  delivery-agent-frontend:
+    container_name: delivery-agent-frontend
+    build:
+      context: DeliveryAgentFrontend
+      dockerfile: Dockerfile
+    image: delivery-agent-frontend:latest
+    ports:
+      - 18084:8084
+    mem_limit: 512m
+    # cpus: 0.5
+    # mem_reservation: 128M
+
+  restaurant-frontend:
+    container_name: restaurant-frontend
+    build:
+      context: RestaurantFrontend
+      dockerfile: Dockerfile
+    image: restaurant-frontend:latest
+    ports:
+      - 18082:8082
+    mem_limit: 512m
+    # cpus: 0.5
+    # mem_reservation: 128M
+
+  mysqldb:
+    build:
+      context: MySqlDatabase
+      dockerfile: Dockerfile
+    image: mysqldb
+    ports:
+      - "13306:3306"
+    # command: --init-file /data/application/init.sql
+    # volumes:
+    #   - .\:/data/application/init.sql
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: food_delivery_web_application
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: abcd1234
+#    networks:
+#      - spring-cloud-network
+    healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+        timeout: 20s
+        retries: 10
+    mem_limit: 512m
+    # cpus: 0.5
+    # mem_reservation: 128M
+
+  eureka-server:
+    container_name: eureka-server
+    build:
+      context: EurekaServer
+      dockerfile: Dockerfile
+    image: eureka-server:latest
+    ports:
+      - 18761:8761
+    mem_limit: 512m
+    # cpus: 0.5
+    # mem_reservation: 128M
+   # networks:
+   #   - spring-cloud-network
+
+  zuul-gateway:
+    depends_on:
+       eureka-server:
+         condition: service_started
+    container_name: zuul-gateway
+    build:
+     context: ZuulGateway
+     dockerfile: Dockerfile
+    image: zuul-gateway:latest
+    ports:
+     - 18080:8080
+    mem_limit: 512m
+    # cpus: 0.5
+    # mem_reservation: 128M
+   # networks:
+   #   - spring-cloud-network
+
+  buyer-backend:
+    depends_on:
+       mysqldb:
+         condition: service_healthy
+       eureka-server:
+         condition: service_started
+    container_name: buyer-backend
+    build:
+      context: BuyerBackend
+      dockerfile: Dockerfile
+    image: buyer-backend:latest
+    ports:
+      - 18081:8081
+    mem_limit: 512m
+    # cpus: 0.5
+    # mem_reservation: 128M
+
+  delivery-agent-backend:
+    depends_on:
+       mysqldb:
+         condition: service_healthy
+       eureka-server:
+         condition: service_started
+    container_name: delivery-agent-backend
+    build:
+      context: DeliveryAgentBackend
+      dockerfile: Dockerfile
+    image: delivery-agent-backend:latest
+    ports:
+      - 18085:8085
+    mem_limit: 512m
+    # cpus: 0.5
+    # mem_reservation: 128M
+
+  restaurant-backend:
+    depends_on:
+       mysqldb:
+         condition: service_healthy
+       eureka-server:
+         condition: service_started
+    container_name: restaurant-backend
+    build:
+      context: RestaurantBackend
+      dockerfile: Dockerfile
+    image: restaurant-backend:latest
+    ports:
+      - 18083:8083
+    mem_limit: 512m
+    # cpus: 0.5
+    # mem_reservation: 128M
+#    networks:
+#      - spring-cloud-network
+
+#for non-windows
+#networks:
+#  spring-cloud-network:
+#    driver: bridge
+
+#for windows
+# networks:
+#   spring-cloud-network:
+#     driver: nat

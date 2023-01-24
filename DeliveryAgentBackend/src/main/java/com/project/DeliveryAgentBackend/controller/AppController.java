@@ -29,6 +29,8 @@ public class AppController {
 		ObjectNode deliveryAgentObjectNode=objectMapper.createObjectNode();
 		deliveryAgentObjectNode.put("mobileNumber",deliveryAgent.getMobileNumber());
 		deliveryAgentObjectNode.put("password",deliveryAgent.getPassword());
+		deliveryAgentObjectNode.put("role",deliveryAgent.getRole());
+		deliveryAgentObjectNode.put("name",deliveryAgent.getName());
 		return deliveryAgentObjectNode.toPrettyString();
 	}
 	

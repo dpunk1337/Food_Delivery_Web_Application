@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,11 +16,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.RestaurantFrontend.entity.Food_Dish;
 import com.project.RestaurantFrontend.entity.Orders;
 import com.project.RestaurantFrontend.entity.User;
-import com.project.RestaurantFrontend.prevalent.CurrentUser;
+import com.project.RestaurantFrontend.entity.UserInfo;
 
 @Repository
 public class AppDao {
-	private static final String URL = "http://localhost:8083/restaurantFrontend/";
+	private static final String URL = "http://zuul-gateway:8080/restaurant/restaurantFrontend/";
 	
 	@Autowired
 	ObjectMapper objectMapper;
@@ -70,7 +71,8 @@ public class AppDao {
 	}
 
 	public List<Orders> getOrders() {
-		return Arrays.asList(restTemplate.getForObject(URL+"getOrders/"+CurrentUser.MOBILE_NUMBER, Orders[].class));
+		UserInfo info=(UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return Arrays.asList(restTemplate.getForObject(URL+"getOrders/"+info.getUid(), Orders[].class));
 	}
 
 	public void markOrderAsPickedUp(String orderId) {

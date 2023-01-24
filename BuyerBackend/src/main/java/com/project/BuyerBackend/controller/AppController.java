@@ -58,6 +58,7 @@ public class AppController {
 			childNode.put("orderId",order.getOrderId());
 			childNode.put("items",order.getItems());
 			childNode.put("status",order.getStatus());
+			childNode.put("deliveryAgentMobileNumber",order.getDeliveryAgentMobileNumber());
 			ordersObjectNode.add(childNode);
 		}
 		return ordersObjectNode.toPrettyString();
@@ -102,6 +103,7 @@ public class AppController {
 			childNode.put("orderId",order.getOrderId());
 			childNode.put("items",order.getItems());
 			childNode.put("status",order.getStatus());
+			childNode.put("deliveryAgentMobileNumber",order.getDeliveryAgentMobileNumber());
 			ordersObjectNode.add(childNode);
 		}
 		return ordersObjectNode.toPrettyString();

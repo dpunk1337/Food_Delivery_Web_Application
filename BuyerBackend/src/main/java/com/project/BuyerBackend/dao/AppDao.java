@@ -3,6 +3,7 @@ package com.project.BuyerBackend.dao;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
@@ -17,14 +18,19 @@ public class AppDao {
 	@Autowired
 	RestTemplate restTemplate;
 	
+	@LoadBalanced
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
 	}
 	
-	private static final String DELIVERY_AGENT_URL = "http://localhost:8085/buyerBackend/";
+//	private static final String DELIVERY_AGENT_URL = "http://localhost:8080/delivery/buyerBackend/";
+//	
+//	private static final String RESTAURANT_URL = "http://localhost:8080/restaurant/buyerBackend/";
 	
-	private static final String RESTAURANT_URL = "http://localhost:8083/buyerBackend/";
+	private static final String DELIVERY_AGENT_URL = "http://DELIVERY-AGENT-BACKEND/buyerBackend/";
+	
+	private static final String RESTAURANT_URL = "http://RESTAURANT-BACKEND/buyerBackend/";
 	
 	public DeliveryAgent getAvailableDeliveryAgentInCity(String buyerCity) {
 		return restTemplate.getForObject(DELIVERY_AGENT_URL+"getAvailableDeliveryAgent/"+buyerCity, DeliveryAgent.class);
