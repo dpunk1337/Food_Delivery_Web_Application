@@ -19,3 +19,5 @@
 !docker-compose.yml
 !kill-all-docker-containers.bat
 !repackage-modules.bat
+
+!Cloud_High_Level_Architecture.jpg
