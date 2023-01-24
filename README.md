@@ -37,7 +37,7 @@
 - Click on the above link and download the already built project zip.
 - Extract it.
 - Run docker command below.
-  - docker-compose up --build from the project directory.
+  - `docker-compose up --build` from the project directory.
 
 ### Normal Deployment :
 - Pre-requisites
@@ -47,10 +47,21 @@
   - Maven 3.5+ setup
 - Download or clone the project.
 - Build all the modules except Zuul-Gateway using maven command below. Make sure it uses JDK 1.8 for build.
-  - mvn package spring-boot:repackage -DskipTests
+  - `mvn package spring-boot:repackage -DskipTests`
 - Build the module Zuul-Gateway using maven command below. Make sure it uses JDK 11 for build.
-  - mvn package
+  - `mvn package`
 - Run docker command below.
-  - docker-compose up --build from the project directory.
+  - `docker-compose up --build` from the project directory.
+
+### How to use :
+- For Login and other persistent details check the `MySqlDatabase/init.sql` file
+- Login with a Buyer account, see the restaurants, click on one, set the quantity from menu and place order.
+- Login with the Restaurant account, see the orders, in that get the mobile number of Delivery Agent.
+- Use the above mobile number to get the credentials and login with Delivery Agent account.
+- Click on mark order is taken link in Restaurant portal for the particular order.
+- The status change will reflect on all three portals, after clicking on refresh.
+- Click on mark order is received link in Buyer portal for the particular order.
+- The status change will reflect again on all three portals on clicking refresh button.
+- Don't forget to explore other side features too.
 
 
