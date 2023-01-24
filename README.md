@@ -25,7 +25,7 @@
   - Service Discovery implemented using Netflix Eureka Spring dependencies.
   - Ribbon Load balancer implemented using Netflix Ribbon dependencies.
 - Below is the architecture diagram, which has been employed in this project.
-  - <img src="https://drive.google.com/uc?export=view&id=1xJ_8WdgO5YGNSFkgVhyaExokcMPvWJ2U" style="width:70%; height:70%" />
+  - <img src="Cloud_High_Level_Architecture.jpg" style="width:70%; height:70%" />
 - For ease of use, it has been made docker compatible.
 
 ## Local Deployment :
