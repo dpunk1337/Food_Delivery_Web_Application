@@ -27,3 +27,30 @@
 - Below is the architecture diagram, which has been employed in this project.
   - <img src="https://drive.google.com/uc?export=view&id=1xJ_8WdgO5YGNSFkgVhyaExokcMPvWJ2U" style="width:70%; height:70%" />
 - For ease of use, it has been made docker compatible.
+
+## Local Deployment :
+
+### Easy Fixed Deployment ( without the need of any other environment setup ) :
+- Pre-requisites
+  - Docker Setup
+- https://drive.google.com/file/d/1Lkk8Mkw9XjjzL9nbq-MOCX5RyzOXEIrb/view?usp=share_link
+- Click on the above link and download the already built project zip.
+- Extract it.
+- Run docker command below.
+  - docker-compose up --build from the project directory.
+
+### Normal Deployment :
+- Pre-requisites
+  - Docker Setup
+  - Java JDK 1.8 setup
+  - Java JDK 11 setup
+  - Maven 3.5+ setup
+- Download or clone the project.
+- Build all the modules except Zuul-Gateway using maven command below. Make sure it uses JDK 1.8 for build.
+  - mvn package spring-boot:repackage -DskipTests
+- Build the module Zuul-Gateway using maven command below. Make sure it uses JDK 11 for build.
+  - mvn package
+- Run docker command below.
+  - docker-compose up --build from the project directory.
+
+
